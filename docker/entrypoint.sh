@@ -22,7 +22,7 @@ fi
 python manage.py migrate --noinput
 
 # Если есть статика — раскомментируй:
-# python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput
 
 # dev режим: DJANGO_DEV=1 -> runserver
 if [ "${DJANGO_DEV}" = "1" ]; then
