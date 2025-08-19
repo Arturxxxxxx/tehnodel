@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   db:
     image: postgres:16
@@ -10,9 +8,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tehnodel}
     volumes:
       - db_data:/var/lib/postgresql/data
-    ports:
-      # убери публикацию порта на проде
-      - "5432:5432"
 
   web:
     build:
@@ -21,18 +16,34 @@ services:
     depends_on:
       - db
     env_file:
-      - .env
+      - .env.prod        # твой файл окружения для продакшена
     environment:
-      # помогает при первом старте, чтобы entrypoint знал хост БД
       POSTGRES_HOST: db
-    ports:
-      - "8000:8000"
+      DJANGO_DEV: "0"   # чтобы запускался gunicorn, а не runserver
+    restart: unless-stopped
+    # не публикуем порт наружу — только для nginx:
+    expose:
+      - "8000"
     volumes:
-      # В DEV удобно монтировать код для hot-reload
-      - .:/app
-    # Для дев-режима можно включать:
-    # environment:
-    #   DJANGO_DEV: "1"
+      # web пишет статику/медиа сюда
+      - static_data:/app/staticfiles
+      - media_data:/app/media
+
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+      - web
+    restart: unless-stopped
+    ports:
+      - "80:80"        # если потом нужен HTTPS — добавим 443
+    volumes:
+      # наш конфиг nginx
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # nginx читает те же тома, что и web (только на чтение)
+      - static_data:/var/www/tehnodel/static:ro
+      - media_data:/var/www/tehnodel/media:ro
 
 volumes:
   db_data:
+  static_data:
+  media_data:
