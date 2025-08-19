@@ -1,34 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
-# ждём БД (простая проверка)
-if [ -n "${POSTGRES_HOST}" ]; then
-  echo "Waiting for Postgres at ${POSTGRES_HOST}:${POSTGRES_PORT:-5432}..."
-  until python - <<PY
-import sys, socket, os
-host=os.getenv("POSTGRES_HOST","db"); port=int(os.getenv("POSTGRES_PORT","5432"))
-s=socket.socket(); s.settimeout(1)
-try:
-    s.connect((host,port)); s.close(); sys.exit(0)
-except Exception as e:
-    sys.exit(1)
-PY
-  do
-    sleep 1
-  done
-fi
+export PYTHONPATH=/tehnodel_backend:$PYTHONPATH
+cd /tehnodel_backend
 
-# миграции и сбор статики по желанию
+# ждем Postgres
+echo "Waiting for Postgres at ${POSTGRES_HOST:-db}:${POSTGRES_PORT:-5432}..."
+until nc -z "${POSTGRES_HOST:-db}" "${POSTGRES_PORT:-5432}"; do
+  sleep 1
+done
+
+# гарантируем каталоги (на named volumes это уже есть, но лишним не будет)
+mkdir -p back_static back_media || true
+
+# миграции + статика
 python manage.py migrate --noinput
-
-# Если есть статика — раскомментируй:
 python manage.py collectstatic --noinput
 
-# dev режим: DJANGO_DEV=1 -> runserver
-if [ "${DJANGO_DEV}" = "1" ]; then
-  echo "Running in DEV mode (runserver + autoreload)"
-  exec python manage.py runserver 0.0.0.0:8000
-fi
-
-# иначе — стандартная команда (gunicorn из CMD)
+# запускаем то, что пришло в CMD (gunicorn)
+echo "Starting: $*"
 exec "$@"
