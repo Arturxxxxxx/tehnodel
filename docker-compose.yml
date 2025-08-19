@@ -40,8 +40,8 @@ services:
       # наш конфиг nginx
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       # nginx читает те же тома, что и web (только на чтение)
-      - static_data:/var/www/tehnodel/static:ro
-      - media_data:/var/www/tehnodel/media:ro
+      - static_data:/root/tehnodel/static:ro
+      - media_data:/root/tehnodel/media:ro
 
 volumes:
   db_data:
