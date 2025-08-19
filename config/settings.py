@@ -1,5 +1,5 @@
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 from config import jazzmin
 
 
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #library
     'rest_framework',
-    'corsheaders',
+    "corsheaders",
     'drf_spectacular',
     #app
     'api',
@@ -141,6 +141,21 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-CORS_ALLOWED_ORIGINS = str(config('CORS_ALLOWED_ORIGINS', cast=str)).split(',')
-CSRF_TRUSTED_ORIGINS = str(config('CSRF_TRUSTED_ORIGINS', cast=str)).split(',')
-CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', cast=bool, default=False)
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS',
+    default='http://localhost:8000,http://127.0.0.1:8000',
+    cast=Csv()
+)
+
+# Тут тоже список через Csv. Нужны схема+хост+порт, БЕЗ путей.
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default='http://localhost:8000,http://127.0.0.1:8000',
+    cast=Csv()
+)
+
+# Если нужно принимать куки/авторизацию с фронта:
+CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=False, cast=bool)
+
+# По умолчанию запрещаем «все источники». Включай точечно через CORS_ALLOWED_ORIGINS.
+CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=False, cast=bool)
