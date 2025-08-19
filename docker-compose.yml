@@ -26,8 +26,8 @@ services:
       - "8000"
     volumes:
       # web пишет статику/медиа сюда
-      - ./staticfiles:/app/staticfiles   # STATIC_ROOT
-      - ./media:/app/media   
+      - static_data:/app/staticfiles
+      - media_data:/app/media
 
   nginx:
     image: nginx:1.27-alpine
