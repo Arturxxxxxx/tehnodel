@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-WORKDIR /opt/tehnodel_backend
+WORKDIR /tehnodel_backend
 
 # системные либы для psycopg2, Pillow и т.п.
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -24,7 +24,7 @@ COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # подготовим каталоги статики/медиа (будут заменены томами, но на чистом образе полезно)
-RUN mkdir -p /opt/tehnodel_backend/back_static /opt/tehnodel_backend/back_media
+RUN mkdir -p /tehnodel_backend/back_static /tehnodel_backend/back_media
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["gunicorn","config.wsgi:application","--bind","0.0.0.0:8000","--workers","4","--threads","2","--timeout","60"]
