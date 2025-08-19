@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-tehnodel}
+      POSTGRES_USER: ${POSTGRES_USER:-tehnodel}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tehnodel}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      # убери публикацию порта на проде
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      # помогает при первом старте, чтобы entrypoint знал хост БД
+      POSTGRES_HOST: db
+    ports:
+      - "8000:8000"
+    volumes:
+      # В DEV удобно монтировать код для hot-reload
+      - .:/app
+    # Для дев-режима можно включать:
+    # environment:
+    #   DJANGO_DEV: "1"
+
+volumes:
+  db_data:
