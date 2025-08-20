@@ -1,0 +1,41 @@
+services:
+  web:
+    build: ./backend
+    container_name: proj2-web
+    env_file: ./backend/.env
+    expose: ["8000"]
+    depends_on: [db]
+    networks: [default, proxy_net]
+    volumes:
+      - static1:/app/back_static
+      - media1:/app/back_media
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: proj2-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-proj1}
+      POSTGRES_USER: ${POSTGRES_USER:-proj1}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-proj1}
+    volumes:
+      - db1:/var/lib/postgresql/data
+    networks: [default]
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend/TehnoDelKg
+    container_name: proj2-front
+    expose: ["80"]
+    networks: [default, proxy_net]
+    restart: unless-stopped
+
+networks:
+  default:
+  proxy_net:
+    external: true
+
+volumes:
+  db1:
+  static1:
+  media1:
