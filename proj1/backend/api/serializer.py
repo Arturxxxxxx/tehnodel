@@ -6,10 +6,10 @@ class ApplicationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Applications
-        feilds = ['id', 'name', 'phone_number', 'address']
+        fields = ['id', 'name', 'phone_number', 'address']
 
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        feilds = ['id', 'name', 'image', 'descriptions']
+        fields = ['id', 'name', 'image', 'descriptions']
