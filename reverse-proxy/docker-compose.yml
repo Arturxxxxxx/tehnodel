@@ -23,6 +23,6 @@ volumes:
   tehnodel_static_data:
     external: true
     name: tehnodel_static_data
-  tehnodel_media_data:
+  media1:
     external: true
     name: media1
