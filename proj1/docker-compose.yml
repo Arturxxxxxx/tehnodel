@@ -7,8 +7,8 @@ services:
     depends_on: [db]
     networks: [default, proxy_net]
     volumes:
-      - static1:/app/back_static
-      - media1:/app/back_media
+      - static1:/tehnodel_backend/back_static
+      - media1:/tehnodel_backend/back_media
     restart: unless-stopped
 
   db:
