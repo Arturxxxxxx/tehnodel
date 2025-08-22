@@ -2,15 +2,14 @@ services:
   nginx:
     image: nginx:1.27-alpine
     container_name: reverse-nginx
-    ports:
-      - "80:80"
+    ports: ["80:80"]
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      # примонтируем статик/медиа proj2
-      - tehnodel_static_data:/static/proj2:ro
+      # те же имена томов:
+      - static1:/static/proj1:ro
       - media1:/media/proj1:ro
-    networks:
-      - proxy_net
+      # если нужен proj2 — добавь его тома аналогично
+    networks: [proxy_net]
     restart: unless-stopped
 
 networks:
@@ -18,11 +17,7 @@ networks:
     external: true
 
 volumes:
-  # ВАЖНО: это те самые existing named volumes,
-  # мы лишь подключаем их как external
-  tehnodel_static_data:
+  static1:
     external: true
-    name: tehnodel_static_data
   media1:
     external: true
-    name: media1
