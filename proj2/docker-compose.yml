@@ -7,17 +7,17 @@ services:
     depends_on: [db]
     networks: [default, proxy_net]
     volumes:
-      tehnodel_static_data:/app/back_static
-      - media2:/app/back_media
+      - tehnodel_static_data:/tehnodel_backend/back_static
+      - media2:/tehnodel_backend/back_media
     restart: unless-stopped
 
   db:
     image: postgres:16
     container_name: proj2-db
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-proj1}
-      POSTGRES_USER: ${POSTGRES_USER:-proj1}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-proj1}
+      POSTGRES_DB: ${POSTGRES_DB:-proj2}
+      POSTGRES_USER: ${POSTGRES_USER:-proj2}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-proj2}
     volumes:
       - db1:/var/lib/postgresql/data
     networks: [default]
@@ -37,5 +37,6 @@ networks:
 
 volumes:
   db1:
-  static2:
   media2:
+  tehnodel_static_data:   # внешний или внутренний? см. пояснение ниже
+    external: true        # если это внешний том, как ты использовал раньше
