@@ -51,6 +51,6 @@ class ProductUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class SpecialistUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+class SpecialistUpdateDeleteView(generics.ListCreateAPIView):
     queryset = Specialist.objects.all()
     serializer_class = SpecialistSerializer
