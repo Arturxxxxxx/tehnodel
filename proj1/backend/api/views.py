@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Applications, Product
-from .serializer import ApplicationsSerializer, ProductSerializer
+from .models import Applications, Product, Specialist
+from .serializer import ApplicationsSerializer, ProductSerializer, SpecialistSerializer
 import requests
 from decouple import config
 
@@ -50,3 +50,7 @@ class ProductView(generics.ListCreateAPIView):
 class ProductUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class SpecialistUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Specialist.objects.all()
+    serializer_class = SpecialistSerializer

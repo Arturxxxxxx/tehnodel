@@ -16,3 +16,12 @@ class Product(models.Model):
     descriptions = models.CharField(blank=True, null=True, verbose_name='описание')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Specialist(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True, verbose_name='Имя')
+    image = models.ImageField(blank=True, null=True, upload_to='specialist/', verbose_name='фотография')
+    speciality = models.CharField(max_length=50, blank=True, null=True, verbose_name='специальность')
+    experience = models.CharField(max_length=100, blank=True, null=True, verbose_name='опыт работы')
+    quantity_reviews = models.CharField(max_length=20, blank=True, null=True, verbose_name='количество отзывов')
+    rating_reviews = models.CharField(max_length=20, blank=True, null=True, verbose_name='рейтинг отзывов')
