@@ -21,9 +21,8 @@ class ApplicationsViews(generics.CreateAPIView):
         text = (
             f"🆕 Новая заявка\n"
             f"Имя: {lead.name}\n"
-            f"Контакт: {lead.contact}\n"
-            f"Сообщение: {lead.message or '-'}\n"
-            f"Время: {lead.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
+            f"Контакт: {lead.phone_number}\n"
+            f'Адрес: {lead.address}'
         )
 
         # Отправка в Telegram
