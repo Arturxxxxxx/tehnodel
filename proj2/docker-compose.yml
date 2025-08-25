@@ -36,6 +36,7 @@ networks:
     external: true
 
 volumes:
+  db1:
   proj2_static:
     external: true
     name: proj2_static
