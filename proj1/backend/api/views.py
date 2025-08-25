@@ -33,13 +33,6 @@ class ApplicationsViews(generics.CreateAPIView):
         }
         r = requests.post(url, json=payload)
 
-        if r.status_code == 200:
-            lead.notified = True
-            lead.save(update_fields=['notified'])
-        else:
-            # можно логировать ошибку или планировать ретрай
-            pass
-
 
 class ProductView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
