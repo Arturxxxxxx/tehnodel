@@ -20,7 +20,7 @@ networks:
 
 volumes:
   # имена этих томов ДОЛЖНЫ существовать (docker volume ls)
-  static1:
+  proj1_static1:
     external: true
   media1:
     external: true
