@@ -8,8 +8,8 @@ services:
       # те же имена томов:
       - static1:/static/proj1:ro
       - media1:/media/proj1:ro
-      - tehnodel_static_data:/static/proj2:ro
-      - media2:/media/proj2:ro
+      - proj2_static:/static/proj2:ro
+      - proj2_media:/media/proj2:ro
       # если нужен proj2 — добавь его тома аналогично
     networks: [proxy_net]
     restart: unless-stopped
