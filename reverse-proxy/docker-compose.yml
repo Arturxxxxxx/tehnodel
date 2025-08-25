@@ -24,5 +24,7 @@ volumes:
     external: true
   proj2_static:
     external: true
+    name: proj2_static
   proj2_media:
     external: true
+    name: proj2_media

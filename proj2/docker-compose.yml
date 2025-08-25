@@ -36,6 +36,9 @@ networks:
     external: true
 
 volumes:
-  db1:
-  proj2_static: {}   # эти имена должны совпадать с reverse-proxy (proj2_static)
-  proj2_media:  {}
+  proj2_static:
+    external: true
+    name: proj2_static
+  proj2_media:
+    external: true
+    name: proj2_media
