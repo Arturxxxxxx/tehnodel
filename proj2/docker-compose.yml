@@ -7,8 +7,8 @@ services:
     depends_on: [db]
     networks: [default, proxy_net]
     volumes:
-      - tehnodel_static_data:/tehnodel_backend/back_static
-      - media2:/tehnodel_backend/back_media
+      - proj2_static:/tehnodel_backend/back_static
+      - proj2_media:/tehnodel_backend/back_media
     restart: unless-stopped
 
   db:
@@ -37,6 +37,5 @@ networks:
 
 volumes:
   db1:
-  media2:
-  tehnodel_static_data:   # внешний или внутренний? см. пояснение ниже
-    external: true        # если это внешний том, как ты использовал раньше
+  proj2_static: {}   # эти имена должны совпадать с reverse-proxy (proj2_static)
+  proj2_media:  {}

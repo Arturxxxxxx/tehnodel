@@ -5,12 +5,12 @@ services:
     ports: ["80:80"]
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      # те же имена томов:
+      # статика/медиа proj1 (внешние тома)
       - static1:/static/proj1:ro
       - media1:/media/proj1:ro
+      # статика/медиа proj2 (внешние тома)
       - proj2_static:/static/proj2:ro
       - proj2_media:/media/proj2:ro
-      # если нужен proj2 — добавь его тома аналогично
     networks: [proxy_net]
     restart: unless-stopped
 
@@ -19,7 +19,19 @@ networks:
     external: true
 
 volumes:
+  # имена этих томов ДОЛЖНЫ существовать (docker volume ls)
   static1:
     external: true
+    # name: <если имя тома отличается, укажи точное имя здесь>
+
   media1:
     external: true
+    # name: <если имя тома отличается, укажи точное имя здесь>
+
+  proj2_static:
+    external: true
+    name: proj2_static1     # <-- подставь точное имя существующего тома
+
+  proj2_media:
+    external: true
+    name: proj2_media1      # <-- подставь точное имя существующего тома
