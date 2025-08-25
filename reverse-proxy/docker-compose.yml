@@ -22,11 +22,8 @@ volumes:
   # имена этих томов ДОЛЖНЫ существовать (docker volume ls)
   static1:
     external: true
-    # name: <если имя тома отличается, укажи точное имя здесь>
-
   media1:
     external: true
-    # name: <если имя тома отличается, укажи точное имя здесь>
 
   proj2_static:
     external: true
@@ -34,4 +31,4 @@ volumes:
 
   proj2_media:
     external: true
-    name: proj2_media1      # <-- подставь точное имя существующего тома
+    name: proj2_media1 
